@@ -34,4 +34,5 @@ jobs:
       - name: Run tests
         env:
           SECRET_KEY: ci-test-secret-key-not-for-production
+          DATABASE_URL: sqlite:///./ci_test.db
         run: python -m pytest -q
