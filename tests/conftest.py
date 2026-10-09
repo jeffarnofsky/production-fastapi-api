@@ -9,6 +9,7 @@ from app.core.config import settings
 from app.db.base import Base
 from app.main import app
 from app.models.user import User  # noqa: F401
+from pydantic import SecretStr
 
 
 @pytest.fixture
@@ -34,9 +35,8 @@ def client(monkeypatch):
     app.dependency_overrides[get_db] = override_get_db
 
     monkeypatch.setattr(
-        settings,
-        "secret_key",
-        "test-only-secret-key-never-use-in-production",
+        "app.core.security.settings.secret_key",
+        SecretStr("test-secret-key-that-is-at-least-32-chars"),
     )
 
     try:
